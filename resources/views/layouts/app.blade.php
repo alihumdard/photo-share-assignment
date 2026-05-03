@@ -8,8 +8,7 @@
     <title>{{ config('app.name', 'PhotoShare') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,55 +19,110 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --primary: #6366f1;
+            --dark: #0b0b18;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --surface: #ffffff;
+            --soft: #f8fafc;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --primary-gradient: var(--gradient);
+            --secondary-gradient: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+            --success-gradient: linear-gradient(135deg, #06b6d4 0%, #22c55e 100%);
+            --shadow-sm: 0 8px 28px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.13);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Figtree', sans-serif;
-            background: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(99,102,241,0.13), transparent 34rem),
+                radial-gradient(circle at top right, rgba(236,72,153,0.11), transparent 30rem),
+                #f8fafc;
             min-height: 100vh;
+            color: var(--ink);
         }
 
         .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+        }
+
+        .site-logo {
+            display: block;
+            width: auto;
+            height: 104px;
+            max-width: 430px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 575.98px) {
+            .site-logo {
+                height: 78px;
+                max-width: 290px;
+            }
         }
 
         .btn-primary {
-            background: var(--primary-gradient);
+            background: var(--gradient);
             border: none;
             font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            transition: transform 0.2s;
+            border-radius: 10px;
+            padding: 0.58rem 1.2rem;
+            box-shadow: 0 7px 22px rgba(99,102,241,0.28);
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 11px 30px rgba(99,102,241,0.38);
+            opacity: 0.95;
+        }
+
+        .btn-outline-primary {
+            border-color: rgba(99,102,241,0.35);
+            color: var(--primary);
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-outline-secondary,
+        .btn-outline-danger {
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(226,232,240,0.9);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(99,102,241,0.22);
         }
 
         .photo-card-img {
-            border-radius: 15px 15px 0 0;
             height: 250px;
             object-fit: cover;
             width: 100%;
+            background: #0b0b18;
         }
 
         .badge {
@@ -77,7 +131,7 @@
         }
 
         .badge-creator {
-            background: var(--primary-gradient);
+            background: var(--gradient);
         }
 
         .badge-consumer {
@@ -86,17 +140,33 @@
 
         .alert {
             border-radius: 12px;
-            border: none;
+            border: 1px solid transparent;
         }
 
         .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.88);
+            border-bottom: 1px solid rgba(226,232,240,0.8);
+            box-shadow: 0 8px 30px rgba(15,23,42,0.05);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav-link {
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 10px;
+            padding: 0.55rem 0.8rem !important;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary);
+            background: rgba(99,102,241,0.08);
         }
 
         .star-rating {
-            color: #ffc107;
-            font-size: 1.2rem;
+            color: #f59e0b;
+            font-size: 1.05rem;
         }
 
         .star-rating-clickable i {
@@ -107,6 +177,29 @@
         .star-rating-clickable i:hover {
             transform: scale(1.3);
         }
+
+        .dropdown-menu {
+            border: 1px solid rgba(226,232,240,0.9);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            padding: 0.55rem;
+        }
+
+        .dropdown-item {
+            border-radius: 9px;
+            color: #334155;
+            font-weight: 500;
+            padding: 0.55rem 0.75rem;
+        }
+
+        .dropdown-item:hover {
+            color: var(--primary);
+            background: rgba(99,102,241,0.08);
+        }
+
+        main {
+            position: relative;
+        }
     </style>
 
     @stack('styles')
@@ -116,7 +209,7 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('dashboard') }}">
-                <i class="bi bi-camera-fill"></i> PhotoShare
+                <img src="{{ asset('logo.png') }}" alt="PhotoShare" class="site-logo">
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

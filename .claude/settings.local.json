@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\laragon\\\\www\\\\photo-sharing-app\" -Recurse -Depth 2)",
+      "Bash(Select-Object -First 50)"
+    ]
+  }
+}
